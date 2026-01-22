@@ -87,8 +87,8 @@ U svakom tabu:
 * Ostavi oba taba otvorena
 * Pošalji poruku s A na B
 
-➡️ Ako je B na **WebSocketu** ili **long-pollingu**, poruka dolazi gotovo odmah
-➡️ Ako je B na **pollingu**, poruka dolazi na sljedeći poll (ovisno o intervalu)
+* Ako je B na **WebSocketu** ili **long-pollingu**, poruka dolazi gotovo odmah
+* Ako je B na **pollingu**, poruka dolazi na sljedeći poll (ovisno o intervalu)
 
 ---
 
@@ -98,7 +98,7 @@ U svakom tabu:
 * Pošalji više poruka iz A
 * Ponovno otvori tab B (`?client=B`)
 
-➡️ B dobije **samo zadnju** poruku poslanu dok je bio offline
+* B dobije **samo zadnju** poruku poslanu dok je bio offline
 
 ---
 
