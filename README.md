@@ -1,7 +1,7 @@
-````md
 # APUW Lab 2 — Simple Chat (Polling / Long-Polling / WebSocket)
 
-Ovaj projekt implementira jednostavnu web uslugu za razmjenu poruka između **dva klijenta (A i B)** preko **posredničkog poslužitelja**.
+Ovaj projekt implementira jednostavnu web uslugu za razmjenu poruka između  
+**dva klijenta (A i B)** preko **posredničkog poslužitelja**.
 
 Podržana su 3 načina primanja poruka:
 1. **Polling** (XMLHttpRequest)
@@ -14,15 +14,16 @@ Server pamti **samo zadnju neisporučenu poruku po klijentu** (ako je primatelj 
 
 ## Preduvjeti
 - **Node.js** (preporuka: LTS verzija)
-- Web preglednik (Chrome/Firefox/Safari) — bez dodataka
+- Web preglednik (Chrome / Firefox / Safari) — bez dodataka
 
-Provjera:
+Provjera instalacije:
 ```bash
 node -v
 npm -v
 ````
 
 ---
+
 ## Instalacija
 
 U root direktoriju projekta pokreni:
@@ -31,11 +32,12 @@ U root direktoriju projekta pokreni:
 npm init -y
 npm install express ws
 ```
+
 ---
 
 ## Struktura projekta (minimalno)
 
-```
+```text
 .
 ├── server.js
 └── public
@@ -56,9 +58,9 @@ U root direktoriju pokreni:
 node server.js
 ```
 
-Ako je sve ok, vidis:
+Ako je sve u redu, u terminalu će se ispisati:
 
-```
+```text
 Server listening on http://localhost:3000
 ```
 
@@ -66,7 +68,7 @@ Server listening on http://localhost:3000
 
 ## Pokretanje klijenata (2 taba)
 
-Otvori **dva taba** u browseru:
+Otvori **dva taba** u web pregledniku:
 
 * Klijent A: `http://localhost:3000/client.html?client=A`
 * Klijent B: `http://localhost:3000/client.html?client=B`
@@ -74,7 +76,7 @@ Otvori **dva taba** u browseru:
 U svakom tabu:
 
 * odaberi način primanja poruka (**Polling / Long polling / WebSocket**)
-* pošaljite poruku u input polje
+* pošalji poruku u input polje
 
 ---
 
@@ -84,15 +86,21 @@ U svakom tabu:
 
 * Ostavi oba taba otvorena
 * Pošalji poruku s A na B
-  ➡️ Ako je B na **WS** ili **long-poll**, poruka dolazi praktički odmah
-  ➡️ Ako je B na **polling**, poruka dolazi na sljedeći poll (ovisno o intervalu)
+
+➡️ Ako je B na **WebSocketu** ili **long-pollingu**, poruka dolazi gotovo odmah
+➡️ Ako je B na **pollingu**, poruka dolazi na sljedeći poll (ovisno o intervalu)
+
+---
 
 ### 2) Primatelj offline → server pamti poruku
 
-* Zatvori tab B (ili refreshaj tako da se “odspoji”)
+* Zatvori tab B (ili ga refreshaj tako da se “odspoji”)
 * Pošalji više poruka iz A
 * Ponovno otvori tab B (`?client=B`)
-  ➡️ B dobije **samo zadnju** poruku koja je poslana dok je bio offline
+
+➡️ B dobije **samo zadnju** poruku poslanu dok je bio offline
+
+---
 
 ### 3) Miješanje tehnika (neovisno po klijentu)
 
@@ -104,22 +112,16 @@ Primjeri:
 
 ---
 
-## Napomena o pravilima (FER)
-
-* Klijent mora koristiti:
-
-  * **XMLHttpRequest** za polling i long-polling
-  * **WebSocket** API za WebSocket način
-
----
-
 ## Troubleshooting
 
 ### Port je zauzet
 
-Ako dobiješ error tipa `EADDRINUSE`, promijeni port u `server.listen(...)` ili ugasi proces koji koristi port.
+Ako dobiješ grešku tipa `EADDRINUSE`, promijeni port u `server.listen(...)`
+ili ugasi proces koji koristi taj port.
 
-### Ne rade `import` naredbe u Node-u
+---
+
+### Ne rade `import` naredbe u Node.js
 
 Provjeri da u `package.json` imaš:
 
@@ -127,10 +129,13 @@ Provjeri da u `package.json` imaš:
 { "type": "module" }
 ```
 
-ili prepiši server na `require(...)` sintaksu.
+Ili prepiši server u `require(...)` sintaksu.
+
+---
 
 ### Long-polling se stalno reconnecta
 
-To je očekivano ponašanje: server nakon timeouta vraća `204`, a klijent ponovno šalje request.
+To je očekivano ponašanje:
+server nakon timeouta vraća `204`, a klijent automatski šalje novi request.
 
 ---
